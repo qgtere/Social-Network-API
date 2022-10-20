@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Thought = require('../models/Thought');
 
 module.exports = {
     getUsers(req,res) {
@@ -30,7 +31,7 @@ module.exports = {
         .then((user) => 
             !user 
             ? res.status(404).json({ message: 'No user with this ID' })
-            : res.status(200).json({ message: 'User info updated' })
+            : res.status(200).json(user)
         )
         .catch((err) => res.status(500).json(err));
     },
@@ -39,9 +40,11 @@ module.exports = {
         .then((user) =>
             !user
             ? res.status(404).json({ message: 'No user with this ID' })
-            : res.status(200).json({ message: 'User deleted' })
+            //: res.status(200).json({ message: 'User was deleted' })
+            : Thought.deleteMany({ _id: { $in: user.thoughts } })
         )
-        .catch((err) => res.status(500).json(err));
+        .then(() => res.json({ message: 'User and associated thoughts were deleted' }))
+        .catch((err) => {console.log(err);res.status(500).json(err)});
     },
     addFriend(req, res) {
         User.findOneAndUpdate(
@@ -51,7 +54,7 @@ module.exports = {
         then((user) =>
             !user
             ? res.status(404).json({ message: 'No user with this ID' })
-            : res.json({ message: 'Friend added' })
+            : res.json({ message: 'Friend was added' })
         ).
         catch((err) => res.status(500).json(err));
     },
@@ -60,10 +63,10 @@ module.exports = {
             { _id: req.params.userID },
             { $pull: { friends: req.params.friendID }}
         )
-        .then((user)=>
+        .then((user) =>
             !user
             ? res.status(404).json({ message: 'No user with this ID' })
-            : res.json({ message: 'Friend deleted' })
+            : res.json({ message: 'Friend was deleted' })
         )
         .catch((err) => res.status(500).json(err));
 
