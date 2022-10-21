@@ -4,7 +4,7 @@ const {
     getUserById,
     createUser,
     updateUser,
-    deleteUser, //delete the associated thought BONUS    
+    deleteUser,
     addFriend,
     deleteFriend,
 } = require('../../controllers/userController');

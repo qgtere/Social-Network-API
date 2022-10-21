@@ -1,6 +1,10 @@
 const { Schema, model } = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
 
+const formatedDate = (date) => {
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;    
+};
+
 const reactionSchema = new Schema(
     {
         reactionId: {
@@ -19,8 +23,13 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (createdAt)=> createdAt.toLocaleDateString("en-US"),
+            get: formatedDate,
         }
+    },
+    {
+        toJSON: {
+            getters: true,
+        },
     }
 );
 
@@ -35,7 +44,7 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (createdAt)=> createdAt.toLocaleDateString("en-US"),
+            get: formatedDate,
         },
         username: {
             type: String,
@@ -46,6 +55,7 @@ const thoughtSchema = new Schema(
     {
         toJSON: {
             virtuals: true,
+            getters: true,
         },
         id: false,
     }
