@@ -77,7 +77,7 @@ For reactions:
 * Delete a reaction from thought's list: `DELETE` http://localhost:3001/api/thoughts/:thoughtID/reactions/:reactionID
 
 ## Walkthrough Video
-[Link to the video](https://)
+[Link to the video](https://drive.google.com/file/d/1ulvlfuNSd-n_a47vgMnVqhL7RJI6yvuf/view?usp=sharing)
 
 ## Techs
 * Javascript
